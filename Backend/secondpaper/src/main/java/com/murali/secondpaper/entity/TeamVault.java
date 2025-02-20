@@ -36,7 +36,7 @@ public class TeamVault {
     private User createdBy;
 
     @ManyToOne
-    @JoinColumn(name = "work_vault_id", referencedColumnName = "id")
+    @JoinColumn(name = "work_vault_id", referencedColumnName = "id", nullable = false)
     private WorkVault workVault;
 
 }

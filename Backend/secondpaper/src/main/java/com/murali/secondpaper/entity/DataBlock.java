@@ -18,7 +18,7 @@ public class DataBlock {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    //@Column(columnDefinition = "jsonb")
+    @Column(columnDefinition = "jsonb", nullable = false)
     private String  properties;
 
     @Enumerated(EnumType.STRING)
@@ -28,14 +28,14 @@ public class DataBlock {
     private LocalDate createdAt;
 
     @Column(nullable = false)
-    private LocalDate LastModifiedAt;
+    private LocalDate lastModifiedAt;
 
     @OneToMany(mappedBy = "dataBlock", cascade = CascadeType.ALL)
     private List<FileEntity> files;
 
     @ManyToOne
     @JoinColumn(name = "last_modified_by", referencedColumnName = "id", nullable = false)
-    private User LastModifiedBy;
+    private User lastModifiedBy;
 
     @ManyToOne
     @JoinColumn(name = "parent_id", referencedColumnName = "id")
@@ -45,9 +45,9 @@ public class DataBlock {
     @JoinColumn(name = "created_by", referencedColumnName = "id", nullable = false)
     private User user;
 
-    // For now the idea is there is no need for workvault relation
+    // For now the idea is there is no need for workvault relationship
     @ManyToOne
-    @JoinColumn(name = "team_vault", referencedColumnName = "id")
+    @JoinColumn(name = "team_vault_id", referencedColumnName = "id")
     private TeamVault teamVault;
 
 }
