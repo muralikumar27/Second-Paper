@@ -1,5 +1,6 @@
 package com.murali.secondpaper.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.murali.secondpaper.enums.VaultType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -31,10 +32,12 @@ public class TeamVault {
     @Column(nullable = false)
     private LocalDate createdAt;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "created_by", referencedColumnName = "id", nullable = false)
     private User createdBy;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "work_vault_id", referencedColumnName = "id", nullable = false)
     private WorkVault workVault;
