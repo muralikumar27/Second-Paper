@@ -29,7 +29,7 @@ public class UserRegistrationEventListener implements ApplicationListener<UserRe
         String toEmail = user.getEmail();
         String subject = "Account verification";
 
-        String mailBody = "Please verify your account by clicking on the link below\n" + event.getApplicationUrl() + "/verify-user?token=" + token;
+        String mailBody = "Please verify your account by clicking on the link below\n" + event.getApplicationUrl() + "/api/v0/auth/verify-user?token=" + token;
 
         VerificationToken verificationToken = new VerificationToken();
         verificationToken.setUser(user);

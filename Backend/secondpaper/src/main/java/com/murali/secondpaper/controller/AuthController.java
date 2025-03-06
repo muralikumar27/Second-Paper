@@ -7,10 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/v0/auth")
@@ -26,5 +23,10 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<ApiResponse> signup(@Valid @RequestBody SignupDto signupDto, HttpServletRequest request) {
         return new ResponseEntity<ApiResponse>(new ApiResponse(userService.registerUser(signupDto, request), "Sign up Successful"), HttpStatus.OK);
+    }
+
+    @GetMapping("/verify-user")
+    public ResponseEntity<ApiResponse> verifyAccount(@RequestParam String token) {
+        return new ResponseEntity<>(new ApiResponse(null, userService.VerifyUser(token)), HttpStatus.OK);
     }
 }
