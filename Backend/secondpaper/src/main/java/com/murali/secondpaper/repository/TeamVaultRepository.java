@@ -8,4 +8,5 @@ import java.util.UUID;
 
 @Repository
 public interface TeamVaultRepository extends JpaRepository<TeamVault, UUID> {
+    boolean existsByNameAndWorkVault_id(String name, UUID workVaultId);
 }

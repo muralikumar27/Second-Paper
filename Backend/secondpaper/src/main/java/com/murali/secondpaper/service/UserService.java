@@ -6,6 +6,7 @@ import com.murali.secondpaper.entity.WorkVault;
 import com.murali.secondpaper.enums.TokenType;
 import com.murali.secondpaper.enums.VaultType;
 import com.murali.secondpaper.event.UserRegistrationEvent;
+import com.murali.secondpaper.event.UserVerificationEvent;
 import com.murali.secondpaper.exception.AlreadyExistsException;
 import com.murali.secondpaper.model.SignupDto;
 import com.murali.secondpaper.repository.UserRepository;
@@ -32,16 +33,15 @@ public class UserService {
     private final ApplicationEventPublisher eventPublisher;
     private final UrlCreator urlCreator;
     private final VerificationTokenRepository verificationTokenRepository;
-    private final WorkVaultService  workVaultService;
 
-    public UserService(PasswordEncoder passwordEncoder, UserRepository repository, UserMapper userMapper, ApplicationEventPublisher eventPublisher, UrlCreator urlCreator, VerificationTokenRepository verificationTokenRepository, WorkVaultService workVaultService) {
+
+    public UserService(PasswordEncoder passwordEncoder, UserRepository repository, UserMapper userMapper, ApplicationEventPublisher eventPublisher, UrlCreator urlCreator, VerificationTokenRepository verificationTokenRepository) {
         this.passwordEncoder = passwordEncoder;
         this.repository = repository;
         this.userMapper = userMapper;
         this.eventPublisher = eventPublisher;
         this.urlCreator = urlCreator;
         this.verificationTokenRepository = verificationTokenRepository;
-        this.workVaultService = workVaultService;
     }
 
     public String registerUser(SignupDto dto, HttpServletRequest request) {
@@ -82,14 +82,14 @@ public class UserService {
 
         User user = optionalToken.get().getUser();
 
-        if (user.isEnabled())
+        if (user.isEnabled()) {
             throw new IllegalArgumentException("Account already verified, please login");
+        }
 
         user.setEnabled(true);
         repository.save(user);
 
-        WorkVault workVault = workVaultService.createWorkVault(user.getUsername(), VaultType.PRIVATE);
-        workVaultService.saveWorkVault(workVault);
+        eventPublisher.publishEvent(new UserVerificationEvent(user, user.getUsername(), VaultType.PRIVATE));
 
         return "Account verification successful";
     }

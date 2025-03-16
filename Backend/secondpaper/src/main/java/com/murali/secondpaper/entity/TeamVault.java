@@ -16,7 +16,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "team_vaults")
+@Table(name = "team_vaults", uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "work_vault_id"})})
 public class TeamVault {
 
     @Id

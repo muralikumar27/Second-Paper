@@ -9,4 +9,5 @@ import java.util.UUID;
 @Repository
 public interface WorkVaultRepository extends JpaRepository<WorkVault, UUID> {
 
+    boolean existsByNameAndCreatedBy_id(String vaultName, UUID id);
 }

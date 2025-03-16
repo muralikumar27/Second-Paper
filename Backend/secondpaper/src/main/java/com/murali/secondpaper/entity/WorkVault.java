@@ -16,7 +16,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "work_vaults")
+@Table(name = "work_vaults", uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "created_by"})})
 public class WorkVault {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

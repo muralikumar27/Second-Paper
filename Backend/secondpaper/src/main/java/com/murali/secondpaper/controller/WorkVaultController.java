@@ -3,6 +3,7 @@ package com.murali.secondpaper.controller;
 import com.murali.secondpaper.entity.WorkVault;
 import com.murali.secondpaper.enums.VaultType;
 import com.murali.secondpaper.service.WorkVaultService;
+import com.murali.secondpaper.util.TestUserProvider;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,6 @@ public class WorkVaultController {
 
     @PostMapping("/{vaultName}")
     public WorkVault createWorkVault(@PathVariable String vaultName) {
-        return workVaultService.createWorkVault(vaultName, VaultType.NON_PRIVATE);
+        return workVaultService.createWorkVault(vaultName, VaultType.DEFAULT, TestUserProvider.userId);
     }
 }
